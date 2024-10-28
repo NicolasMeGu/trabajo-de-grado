@@ -1,0 +1,2 @@
+export const supabaseUrl='https://vyqibeorviftfpxrsukm.supabase.co'; 
+export const supabaseAnonKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ5cWliZW9ydmlmdGZweHJzdWttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjc5OTE5MTksImV4cCI6MjA0MzU2NzkxOX0.K3lu1JeIvk55YEk-gKgw0_vHxxK5ToS4RLKU187p1FI';
