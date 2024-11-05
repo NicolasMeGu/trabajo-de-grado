@@ -42,22 +42,6 @@ export const fetchMessages = async (senderId, receiverId) => {
     console.log('Fetched messages:', data); // Agregado para depuración
     return data;
 };
-export const fetchChatByUsers = async (userId, contactId) => {
-    const { data, error } = await supabase
-        .from('chats')
-        .select('*')
-        .or(`user_id_1.eq.${userId},user_id_2.eq.${userId}`)
-        .or(`user_id_1.eq.${contactId},user_id_2.eq.${contactId}`)
-        .single();
-
-    if (error) {
-        // Manejo de errores al buscar el chat
-        console.error("Error fetching chat:", error);
-        return null;
-    }
-
-    return data; // Devuelve el chat existente si se encontró
-};
 
 
 export const subscribeToMessages = (contactId, setMessages) => {
@@ -81,4 +65,7 @@ export const subscribeToMessages = (contactId, setMessages) => {
     return () => {
         supabase.removeSubscription(messageSubscription);
     };
+};
+export const getSupabaseFileUrl = (path) => {
+    return `https://your-supabase-url/storage/v1/object/public/${path}`;
 };

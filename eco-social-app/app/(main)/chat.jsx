@@ -1,11 +1,19 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { useRouter } from 'expo-router';
 import { fetchMessages, sendMessage, subscribeToMessages } from '../../services/chatServices'; // Asegúrate de importar tus funciones correctamente
 
 const ChatScreen = () => {
     const [messages, setMessages] = useState([]);
-    const [contact, setContact] = useState(null);
+     const router = useRouter();
+    const { contact } = router.params;
+    console.log("Contact received in ChatScreen:", contact);
+
+    if (!contact) {
+        console.error("No contact data found");
+        return <Text>Error: No contact data</Text>;
+    }
 
     useEffect(() => {
         const fetchContacts = async () => {
@@ -41,6 +49,7 @@ const ChatScreen = () => {
     }, [contact]);
 
     const onSend = useCallback(async (messages = []) => {
+         console.log("Intentando enviar mensaje, contacto actual:", contact);
         if (!contact) {
             console.error("No contact selected");
             return;

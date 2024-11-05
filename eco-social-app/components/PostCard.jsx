@@ -56,6 +56,20 @@ const PostCard = ({
 
     const [loading, setLoading] = useState(false);
     const [likes, setLikes] = useState(item?.postLikes || []);
+    const [showMore, setShowMore] = useState(false);
+const [isLongText, setIsLongText] = useState(false);
+
+useEffect(() => {
+    if (item?.body) {
+        const plainText = stripHtmlTags(item?.body);
+        setIsLongText(plainText.length > 200);
+    }
+}, [item?.body]);
+
+const toggleShowMore = () => {
+    setShowMore(!showMore);
+};
+
 
     useEffect(() => {
         setLikes(item?.postLikes || []);
@@ -164,14 +178,25 @@ const PostCard = ({
 
             <View style={styles.content}>
                 <View style={styles.postBody}>
-                    {
-                        item?.body && (
-                            <RenderHTML
-                                contentWidth={wp(100)}
-                                source={{ html: item?.body }}
-                                tagsStyles={tagsStyles}
-                            />
-                        )}
+                   {
+    item?.body && (
+        <>
+            <RenderHTML
+                contentWidth={wp(100)}
+                source={{ html: showMore || !isLongText ? item?.body : `${stripHtmlTags(item?.body).slice(0, 200)}...` }}
+                tagsStyles={tagsStyles}
+            />
+            {isLongText && (
+                <TouchableOpacity onPress={toggleShowMore}>
+                    <Text style={{ color: theme.colors.primary }}>
+                        {showMore ? 'Show Less' : 'Show More'}
+                    </Text>
+                </TouchableOpacity>
+            )}
+        </>
+    )
+}
+
                 </View>
                 {item?.file && item?.file.includes('postImages') && (
                     <Image

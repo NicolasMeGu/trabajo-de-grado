@@ -41,3 +41,38 @@ export const fetchNotifications = async (receiverId) => {
         return { success: false, msg: 'Could not fetch the notification' };
     }
 }
+// services/notificationService.js
+
+export const sendNotification = async (userId, message) => {
+    try {
+        const response = await fetch('https://tu-api.com/notificaciones', {
+            method: 'POST', // Verifica que POST sea el método correcto
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userId,
+                message,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Error ${response.status}: ${errorData.message || 'Error desconocido'}`);
+        }
+
+        const data = await response.json();
+        return { success: true, data };
+    } catch (error) {
+        console.error('Error al enviar notificación:', error.message);
+        return { success: false, error: error.message };
+    }
+};
+
+
+
+export const getNotifications = async () => {
+    let res = await fetchNotifications(user.id);
+    console.log('notifications ', res);
+    if(res.success) setNotifications(res.data);
+}

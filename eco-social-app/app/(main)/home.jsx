@@ -136,9 +136,10 @@ const Home = () => {
                         <Pressable onPress={() => router.push('newPost')}>
                             <Icon name="plus" size={hp(3.2)} strokeWidth={2} color={theme.colors.text} />
                         </Pressable>
-                        <Pressable onPress={() => router.push('contactsScreen')}>
+                       <Pressable onPress={() => router.push('contactsScreen')}>
                             <Icon name="chat" size={hp(3.2)} strokeWidth={2} color={theme.colors.text} />
                         </Pressable>
+                        
                         <Pressable onPress={() => router.push('profile')}>
                             <Avatar uri={user?.image} size={hp(4.3)} rounded={theme.radius.sm} style={{ borderWidth: 2 }} />
                         </Pressable>
